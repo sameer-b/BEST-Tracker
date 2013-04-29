@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BEST Tracker</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.6.0.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <script type="text/javascript" charset="utf-8">
+
+    function startTracker() {
+    int=self.setInterval(function(){getLocation();},10000);
+    }
+
+  function getLocation() {
+
+        navigator.geolocation.getCurrentPosition(onSuccess, onError,{enableHighAccuracy:true});
+    }
+
+   
+    function onSuccess(position) {
+      
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          +                                   position.timestamp          + '<br />';
+
+   var busID=241;
+   var latitude,longitude,altitude,altitudeAccuracy,accuracy,heading,speed,timestamp;
+   latitude=position.coords.latitude;
+   longitude=position.coords.longitude;
+   altitude =position.coords.altitude;
+   accuracy= position.coords.altitude;
+   altitudeAccuracy=position.coords.altitudeAccuracy;
+   heading= position.coords.heading;
+   speed= position.coords.speed;
+   timestamp=position.coords.timestamp;
+   
+   if(busID==null || busID==undefined || busID=='')
+{
+	busID=0;
+}
+
+if(latitude==null || latitude==undefined || latitude=='')
+{
+	latitude=0;
+}
+
+if(longitude==null || longitude==undefined || longitude=='')
+{
+	longitude=0;
+}
+
+if(altitude==null  || altitude==undefined || altitude=='')
+{
+	altitude=0;
+}
+
+if(altitudeAccuracy==null || altitudeAccuracy==undefined || altitudeAccuracy=='')
+{
+	altitudeAccuracy=0;
+}
+
+if(timestamp==null || timestamp==undefined || timestamp=='')
+{
+	timestamp=0;
+}
+
+if(speed==null || speed==undefined || speed=='')
+{
+	speed=0;
+}
+
+if(accuracy==null || accuracy==undefined || accuracy=='')
+{
+	accuracy=0;
+}
+
+if(heading==null || heading==undefined || heading=='')
+{
+	heading=0;
+}
+   
+
+ //http://116.73.40.157/BESTTRACKER/?busID=241&latitude=0&longitude=0&altitude=0&altitudeAccuracy=0&heading=0&speed=0&timeStamp=0&accuracy=0&submit=Submit
+
+//"http://127.0.0.1/BESTTRACKER/?busID="+busID+"&latitude="+latitude+"&longitude="+longitude+"&altitude="+altitude+"&altitudeAccuracy="+altitudeAccuracy+"&heading="+heading+"&speed="+speed+"&timeStamp="+timestamp+"&accuracy="+accuracy+"&submit=Submit"
+
+var xmlhttp=new XMLHttpRequest();
+xmlhttp.open("POST","http://116.73.40.157/BESTTRACKER/?busID="+busID+"&latitude="+latitude+"&longitude="+longitude+"&altitude="+altitude+"&altitudeAccuracy="+altitudeAccuracy+"&heading="+heading+"&speed="+speed+"&timeStamp="+timestamp+"&accuracy="+accuracy+"&submit=Submit",false);
+xmlhttp.send();
+
+
+    }
+
+  
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');
+    }
+
+    </script>
+  </head>
+  <body>
+   <h1>BEST Tracker </h1>
+    <p id="geolocation">Finding geolocation...</p>
+    <button onclick="startTracker()"> Track </button>
+    <button onclick="int=window.clearInterval(int)">Stop</button>
+  </body>
+</html>
